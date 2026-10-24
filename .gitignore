@@ -1,0 +1,7 @@
+__pycache__/
+.venv/
+.pytest_cache/
+_testkit/
+_client/
+*.csv
+CLAUDE.local.md

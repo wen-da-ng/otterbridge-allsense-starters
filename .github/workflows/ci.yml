@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # The test kit and the Python client come from their repos until they're on PyPI; while those
+      # repos are private, a read-only TESTKIT_TOKEN secret lets CI fetch them.
+      - uses: actions/checkout@v4
+        with:
+          repository: wen-da-ng/otterbridge-allsense-protocol
+          token: ${{ secrets.TESTKIT_TOKEN || github.token }}
+          path: _testkit
+      - uses: actions/checkout@v4
+        with:
+          repository: wen-da-ng/otterbridge-allsense-python
+          token: ${{ secrets.TESTKIT_TOKEN || github.token }}
+          path: _client
+      - run: pip install ./_testkit ./_client pytest
+      - run: allsense-template check frame-template/example.json
+      - run: python -m pytest -q python-module

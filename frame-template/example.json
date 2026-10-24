@@ -1,0 +1,32 @@
+{
+  "name": "my_board",
+  "description": "Replace with what your board expects. Format: https://docs.allsense.otterbridge.org/TEMPLATES/",
+  "header": "AA 55",
+  "rate_hz": 100,
+  "fields": [
+    {
+      "src": "accelerometer",
+      "idx": [
+        0,
+        1,
+        2
+      ],
+      "type": "i16",
+      "scale": 100
+    },
+    {
+      "src": "gyroscope",
+      "idx": [
+        0,
+        1,
+        2
+      ],
+      "type": "i16",
+      "scale": 1000
+    },
+    {
+      "type": "seq_u8"
+    }
+  ],
+  "checksum": "xor8"
+}
